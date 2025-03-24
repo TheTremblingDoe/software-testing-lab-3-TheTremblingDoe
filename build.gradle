@@ -75,7 +75,11 @@ tasks.jacocoTestCoverageVerification {
     }
 }
 
-// Configure allureReport task
-//tasks.allureReport {
-  //  resultsDir = file("$buildDir/allure-results")  // Set results directory for Allure report
-//}
+spotless {
+    java {
+        googleJavaFormat()  // Используйте Google Java Format для форматирования
+        removeUnusedImports()  // Удаляет неиспользуемые импорты
+        trimTrailingWhitespace()  // Удаляет пробелы в конце строк
+        endWithNewline()  // Добавляет новую строку в конце файла
+    }
+}

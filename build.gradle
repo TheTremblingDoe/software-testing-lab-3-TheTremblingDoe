@@ -1,9 +1,8 @@
 plugins {
     id 'java'
-    id("jacoco")  // Add JaCoCo plugin
-    id 'io.qameta.allure' version '2.11.2'
+    id 'jacoco'
+    id 'io.qameta.allure' version '2.11.2'  // Allure plugin
     id 'com.diffplug.spotless' version '6.22.0'
-
 }
 
 group = 'org.usvm'
@@ -23,10 +22,10 @@ dependencies {
     testImplementation("io.rest-assured:rest-assured:5.5.1")
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation("org.mockito:mockito-core:5.15.2")
-
 }
 
-tasks.allure {
+// Allure configuration
+allure {
     version = '2.24.0'
     autoconfigure = true
     useJUnit5 {
@@ -34,18 +33,9 @@ tasks.allure {
     }
 }
 
-tasks.spotless {
-    java {
-        googleJavaFormat()
-        removeUnusedImports()
-        trimTrailingWhitespace()
-        endWithNewline()
-    }
-}
-
 tasks.test {
     useJUnitPlatform()
-    finalizedBy(tasks.jacocoTestReport, allureReport)  // Generate report after tests
+    finalizedBy(tasks.jacocoTestReport, tasks.allureReport)  // Generate report after tests
 }
 
 // JaCoCo configuration
@@ -63,9 +53,9 @@ tasks.jacocoTestReport {
         html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
     }
     
-    // Optional: Exclude classes/packages from coverage
+    // Corrected: Use collect instead of map
     classDirectories.setFrom(
-        files(classDirectories.files.map {
+        files(classDirectories.files.collect {
             fileTree(it).exclude(
                 "**/*Application.class",  // Example exclusion
                 "**/generated/**"         // Example exclusion
@@ -79,12 +69,13 @@ tasks.jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = "0.90".toBigDecimal()  // 70% minimum coverage
+                minimum = "0.90".toBigDecimal()  // 90% minimum coverage
             }
         }
     }
 }
 
-tasks.allureReport {
-    resultsDir = file('build/allure-results')
-}
+// Configure allureReport task
+//tasks.allureReport {
+  //  resultsDir = file("$buildDir/allure-results")  // Set results directory for Allure report
+//}

@@ -30,6 +30,11 @@ jobs:
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4  # Исправлено на v4
+      with:
+        name: reports
+        path: |
+          build/reports/allure-report/allureReport
+          build/jacoco/test/html
 
     - name: Deploy Allure Report to GitHub Pages
       if: github.ref == 'refs/heads/main'

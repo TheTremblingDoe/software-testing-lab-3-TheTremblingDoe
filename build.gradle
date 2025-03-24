@@ -41,7 +41,7 @@ tasks.test {
 // JaCoCo configuration
 jacoco {
     toolVersion = "0.8.12"  // Latest version as of 2024-05-20
-    reportsDirectory.set(layout.buildDirectory.dir("reports/jacoco"))
+    //reportsDirectory.set(layout.buildDirectory.dir("reports/jacoco"))
 }
 
 tasks.jacocoTestReport {
@@ -50,7 +50,7 @@ tasks.jacocoTestReport {
         xml.required.set(true)    // For CI/CD integration
         html.required.set(true)   // Human-readable HTML report
         csv.required.set(false)
-        html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
+        //html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
     }
     
     // Corrected: Use collect instead of map

@@ -45,3 +45,6 @@ jobs:
 
     - name: Spotless check
       run: ./gradlew spotlessCheck
+    
+    - name: Apply code formatting with Spotless
+      run: ./gradlew spotlessApply

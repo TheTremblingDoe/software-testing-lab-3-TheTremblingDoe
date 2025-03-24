@@ -27,23 +27,16 @@ jobs:
 
     - name: Generate Allure Report
       uses: simple-elf/allure-report-action@v1.1
-      with:
-        allure-results: build/allure-results
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4  # Исправлено на v4
-      with:
-        name: reports
-        path: |
-          build/reports/
-          build/allure-reports/
 
     - name: Deploy Allure Report to GitHub Pages
       if: github.ref == 'refs/heads/main'
       uses: peaceiris/actions-gh-pages@v4  # Обновлено до v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: build\reports\allure-report\allureReport
+        publish_dir: build/reports/allure-report/allureReport
 
     - name: Spotless check
       run: ./gradlew spotlessCheck
